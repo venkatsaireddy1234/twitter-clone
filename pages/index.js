@@ -1,3 +1,4 @@
+import Feed from "@/components/Feed";
 import SideBar from "@/components/SideBar";
 import Head from "next/head";
 
@@ -11,6 +12,7 @@ export default function Home() {
       </Head>
       <main className="flex min-h-screen max-w-7xl mx-auto">
       <SideBar />
+      <Feed />
       </main>
     </div>
   );
