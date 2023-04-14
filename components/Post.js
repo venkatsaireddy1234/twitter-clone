@@ -15,9 +15,9 @@ export default function Post({
   name,
 }) {
   return (
-    <div className="flex border-b border-gray-200 py-3 cursor-pointer ">
+    <div className="flex border-b border-gray-200 p-3 cursor-pointer ">
       {/* {user-image} */}
-      <img className = "h-11 w-11 rounded-full ml-2 mr-4" src={userImage} alt="userImage" />
+      <img className = "h-11 w-11 rounded-full mr-4" src={userImage} alt="userImage" />
       <div>
         {/* {Header} */}
         <div className="flex items-center justify-between">
