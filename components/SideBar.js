@@ -11,7 +11,7 @@ import { DotsCircleHorizontalIcon } from "@heroicons/react/outline";
 import {DotsHorizontalIcon} from "@heroicons/react/outline"
 export default function SideBar() {
   return (
-    <div className="hidden sm:flex flex-col xl:items-start fixed h-full ">
+    <div className="hidden sm:flex flex-col xl:items-start fixed h-full xl:ml-24 ">
       {/* {Logo} */}
       <div className="hoverEffect p-0 hover:bg-blue-100 xl:px-1">
         <Image
