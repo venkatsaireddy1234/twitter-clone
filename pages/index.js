@@ -4,6 +4,7 @@ import Widgets from "@/components/Widgets";
 import Head from "next/head";
 
 export default function Home({ newsResults,randomUsersResults }) {
+  
   return (
     <div>
       <Head>
