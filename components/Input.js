@@ -1,7 +1,9 @@
 import { PhotographIcon } from "@heroicons/react/outline";
 import { EmojiHappyIcon } from "@heroicons/react/outline";
+import { useSession } from "next-auth/react";
 
 export default function Input() {
+  const {data:session} = useSession()
   return (
     <div className="flex space-x-3 border-b border-gray-300 p-3 ">
       <img
