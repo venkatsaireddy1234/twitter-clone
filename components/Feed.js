@@ -1,32 +1,22 @@
 import { SparklesIcon } from "@heroicons/react/outline";
 import Input from "./Input";
 import Post from "./Post";
+import { useEffect, useState } from "react";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import { db } from "@/firebase";
 
 export default function Feed() {
-  const posts = [
-    {
-      id: "1",
-      name: "venkat",
-      userName: "vnktsai",
-      timeStamp: "2 hours ago",
-      postImage:
-        "https://plus.unsplash.com/premium_photo-1669741178222-004a82192170?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
-      userImage:
-        "https://pbs.twimg.com/profile_images/705952285965291521/T19JWacu_400x400.jpg",
-      text: "wow",
-    },
-    {
-      id: "2",
-      name: "sai",
-      userName: "sai",
-      timeStamp: "3 hours ago",
-      postImage:
-        "https://images.unsplash.com/photo-1681454450359-023f4f1b5466?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1325&q=80",
-      userImage:
-        "https://pbs.twimg.com/profile_images/705952285965291521/T19JWacu_400x400.jpg",
-      text: "Jet",
-    },
-  ];
+ const [post, setPost] = useState([]);
+
+ useEffect(()=>
+   onSnapshot(
+    query(collection(db, "posts"), orderBy("timestamp", "desc")),
+    (snapshot) => {
+      setPost(snapshot.docs);
+    }
+  ),
+[]
+ )
   return (
     <div className="xl:ml-[370px]  border-l border-r xl:min-w-[576px] sm:ml-[73px] flex-grow max-w-xl">
       <div className="flex sticky px-2 py-2 z-50 border-b bg-white border-gray-200">
@@ -36,15 +26,15 @@ export default function Feed() {
         </div>
       </div>
       <Input />
-      {posts.map((post) => (
+      {post.map((post) => (
         <Post
           key={post.id}
-          userName={post.userName}
-          name={post.name}
-          postImage={post.postImage}
-          userImage={post.userImage}
-          text={post.text}
-          timeStamp={post.timeStamp}
+          userName={post.data().username}
+          name={post.data().name}
+          postImage={post.data().image}
+          userImage={post.data().userImg}
+          text={post.data().text}
+          timeStamp={post.data().timeStamp}
         />
       ))}
     </div>
