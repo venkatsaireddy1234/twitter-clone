@@ -51,7 +51,7 @@ export default function SideBar() {
           <div className="hoverEffect text-grey-700 flex items-center justify-center xl:justify-start mt-auto">
             <img
               onClick={signOut}
-              src="https://pbs.twimg.com/profile_images/705952285965291521/T19JWacu_400x400.jpg"
+              src= {session.user.image}
               className="h-10 w-10 rounded-full xl:mr-2"
               alt="user-image"
             ></img>
