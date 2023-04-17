@@ -15,7 +15,7 @@ export default function Feed() {
       setPost(snapshot.docs);
     }
   ),
-[]
+[post]
  )
   return (
     <div className="xl:ml-[370px]  border-l border-r xl:min-w-[576px] sm:ml-[73px] flex-grow max-w-xl">
@@ -35,6 +35,7 @@ export default function Feed() {
           userImage={post.data().userImg}
           text={post.data().text}
           timeStamp={post?.data()}
+          post={post}
         />
       ))}
     </div>
