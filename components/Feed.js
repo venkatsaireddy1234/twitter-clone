@@ -26,7 +26,7 @@ export default function Feed() {
         </div>
       </div>
       <Input />
-      {post.map((post) => (
+      {post.map((post) =>(
         <Post
           key={post.id}
           userName={post.data().username}
@@ -34,7 +34,7 @@ export default function Feed() {
           postImage={post.data().image}
           userImage={post.data().userImg}
           text={post.data().text}
-          timeStamp={post?.data().timeStamp}
+          timeStamp={post?.data()}
         />
       ))}
     </div>
