@@ -34,7 +34,7 @@ export default function Feed() {
           postImage={post.data().image}
           userImage={post.data().userImg}
           text={post.data().text}
-          timeStamp={post.data().timeStamp}
+          timeStamp={post?.data().timeStamp}
         />
       ))}
     </div>

@@ -15,6 +15,7 @@ export default function Post({
   timeStamp,
   name,
 }) {
+  console.log(timeStamp,name);
   return (
     <div className="flex border-b border-gray-200 p-3 cursor-pointer ">
       {/* {user-image} */}
