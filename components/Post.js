@@ -22,6 +22,8 @@ import {
 import { db, storage } from "@/firebase";
 import { useEffect, useState } from "react";
 import { deleteObject, ref } from "firebase/storage";
+import { useRecoilState } from "recoil";
+import { modalState } from "@/atom/modalAtom";
 
 export default function Post({
   key,
@@ -35,7 +37,8 @@ export default function Post({
   const { data: session } = useSession();
   const [likes, setLikes] = useState([]);
   const [hasLikes, setHasLikes] = useState(null);
-
+  const [open, setOpen] = useRecoilState(modalState);
+  
   async function likePost() {
     if (session) {
       if (hasLikes) {
@@ -71,6 +74,8 @@ export default function Post({
       likes.findIndex((like) => like.id === session?.user.uid) !== -1
     );
   }, [likes]);
+  
+
   return (
     <div className="flex border-b border-gray-200 p-3 cursor-pointer ">
       {/* {user-image} */}
@@ -103,7 +108,9 @@ export default function Post({
           )}
           {/* {icons} */}
           <div className="flex justify-between  text-gray-500 p-2">
-            <ChatIcon className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-sky-100" />
+            <ChatIcon 
+            onClick = {()=>setOpen(!open)} 
+            className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-sky-100" />
             {session?.user.uid === post?.data().id && (
               <TrashIcon
                 onClick={deletePost}
