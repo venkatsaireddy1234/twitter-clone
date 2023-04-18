@@ -29,7 +29,6 @@ export default function Post({
   userImage,
   postImage,
   text,
-  timeStamp,
   name,
   post,
 }) {
@@ -52,9 +51,11 @@ export default function Post({
   }
 
   async function deletePost() {
-    if(window.confirm("Are you sure you want to delete the post")){
-      deleteDoc(doc(db,"posts", post.id))
-      deleteObject(ref(storage,`posts${post.id}/image`))
+    if (window.confirm("Are you sure you want to delete the post")) {
+      deleteDoc(doc(db, "posts", post.id));
+      if (post.data().image) {
+        deleteObject(ref(storage, `posts${post.id}/image`));
+      }
     }
   }
 
@@ -88,7 +89,7 @@ export default function Post({
             </h4>
             <span className="text-sm sm:text-[15px]">@{userName} -</span>
             <span className="text-sm sm:text-[15px] hover:underline">
-              <Moment fromNow>{timeStamp}</Moment>
+              <Moment fromNow>{post?.data()?.timestamp?.toDate()}</Moment>
             </span>
           </div>
           {/* {icon} */}
@@ -97,13 +98,17 @@ export default function Post({
         <p className="text-gray-800 text-[15px sm:text-[16px] mb-2">{text}</p>
         <div>
           {/* {post-image} */}
-          <img className="rounded-2xl mr-2" src={postImage} alt="postImage" />
+          {postImage && (
+            <img className="rounded-2xl mr-2" src={postImage} alt="postImage" />
+          )}
           {/* {icons} */}
           <div className="flex justify-between  text-gray-500 p-2">
             <ChatIcon className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-sky-100" />
             {session?.user.uid === post?.data().id && (
-              <TrashIcon onClick= {deletePost}
-              className="h-9 w-9  hoverEffect p-2  hover:text-red-600 hover:bg-red-100" />
+              <TrashIcon
+                onClick={deletePost}
+                className="h-9 w-9  hoverEffect p-2  hover:text-red-600 hover:bg-red-100"
+              />
             )}
             <div className="flex  items-center">
               {hasLikes ? (
