@@ -23,7 +23,7 @@ import { db, storage } from "@/firebase";
 import { useEffect, useState } from "react";
 import { deleteObject, ref } from "firebase/storage";
 import { useRecoilState } from "recoil";
-import { modalState, postIdState } from "@/atom/modalAtom";
+import { modalState } from "@/atom/modalAtom";
 
 export default function Post({
   key,
@@ -38,7 +38,7 @@ export default function Post({
   const [likes, setLikes] = useState([]);
   const [hasLikes, setHasLikes] = useState(null);
   const [open, setOpen] = useRecoilState(modalState);
-  const [postId, setPostId] = useRecoilState(postIdState)
+  
   async function likePost() {
     if (session) {
       if (hasLikes) {
@@ -109,16 +109,7 @@ export default function Post({
           {/* {icons} */}
           <div className="flex justify-between  text-gray-500 p-2">
             <ChatIcon 
-            onClick = {()=>{
-              if(session){
-
-                setPostId(post.id)
-                setOpen(!open)
-              }else{
-                signIn();
-              }
-
-            }} 
+            onClick = {()=>setOpen(!open)} 
             className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-sky-100" />
             {session?.user.uid === post?.data().id && (
               <TrashIcon
