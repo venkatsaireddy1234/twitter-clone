@@ -23,21 +23,17 @@ import { db, storage } from "@/firebase";
 import { useEffect, useState } from "react";
 import { deleteObject, ref } from "firebase/storage";
 import { useRecoilState } from "recoil";
-import { modalState } from "@/atom/modalAtom";
+import { modalState, postIdState } from "../atom/modalAtom";
 
 export default function Post({
-  key,
-  userName,
-  userImage,
   postImage,
-  text,
-  name,
   post,
 }) {
   const { data: session } = useSession();
   const [likes, setLikes] = useState([]);
   const [hasLikes, setHasLikes] = useState(null);
   const [open, setOpen] = useRecoilState(modalState);
+  const [postId, setPostId] = useRecoilState(postIdState);
   
   async function likePost() {
     if (session) {
@@ -56,7 +52,7 @@ export default function Post({
   async function deletePost() {
     if (window.confirm("Are you sure you want to delete the post")) {
       deleteDoc(doc(db, "posts", post.id));
-      if (post.data().image) {
+      if (post?.data()?.image) {
         deleteObject(ref(storage, `posts${post.id}/image`));
       }
     }
@@ -75,13 +71,13 @@ export default function Post({
     );
   }, [likes]);
   
-
+ 
   return (
     <div className="flex border-b border-gray-200 p-3 cursor-pointer ">
       {/* {user-image} */}
       <img
         className="h-11 w-11 rounded-full mr-4"
-        src={userImage}
+        src={post?.data()?.userImg}
         alt="userImage"
       />
       <div>
@@ -90,9 +86,9 @@ export default function Post({
           {/* {user-info} */}
           <div className="flex items-center space-x-1 whitespace-nowrap">
             <h4 className="font-bold text-[15px] hover:underline sm:text-[16px]">
-              {name}
+        {post?.data()?.name}
             </h4>
-            <span className="text-sm sm:text-[15px]">@{userName} -</span>
+            <span className="text-sm sm:text-[15px]">@{post?.data()?.username} -</span>
             <span className="text-sm sm:text-[15px] hover:underline">
               <Moment fromNow>{post?.data()?.timestamp?.toDate()}</Moment>
             </span>
@@ -100,17 +96,25 @@ export default function Post({
           {/* {icon} */}
           <DotsHorizontalIcon className="h-10 hoverEffect hover:bg-sky-200 hover:text-500" />
         </div>
-        <p className="text-gray-800 text-[15px sm:text-[16px] mb-2">{text}</p>
+        <p className="text-gray-800 text-[15px sm:text-[16px] mb-2">{post?.data()?.text}</p>
         <div>
           {/* {post-image} */}
           {postImage && (
-            <img className="rounded-2xl mr-2" src={postImage} alt="postImage" />
+            <img className="rounded-2xl mr-2" src={post?.data()?.image} alt="postImage" />
           )}
           {/* {icons} */}
           <div className="flex justify-between  text-gray-500 p-2">
-            <ChatIcon 
-            onClick = {()=>setOpen(!open)} 
-            className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-sky-100" />
+          <ChatIcon
+            onClick={() => {
+              if (!session) {
+                signIn();
+              } else {
+                setPostId(post.id);
+                setOpen(!open);
+              }
+            }}
+            className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-sky-100"
+          />
             {session?.user.uid === post?.data().id && (
               <TrashIcon
                 onClick={deletePost}

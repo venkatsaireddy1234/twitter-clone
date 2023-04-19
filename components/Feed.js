@@ -7,17 +7,17 @@ import { db } from "@/firebase";
 import { AnimatePresence,motion } from "framer-motion";
 
 export default function Feed() {
-  const [post, setPost] = useState([]);
+  const [posts, setPosts] = useState([]);
 
   useEffect(
     () =>
       onSnapshot(
         query(collection(db, "posts"), orderBy("timestamp", "desc")),
         (snapshot) => {
-          setPost(snapshot.docs);
+          setPosts(snapshot.docs);
         }
       ),
-    [post]
+    []
   );
   return (
     <div className="xl:ml-[370px]  border-l border-r xl:min-w-[576px] sm:ml-[73px] flex-grow max-w-xl">
@@ -29,7 +29,7 @@ export default function Feed() {
       </div>
       <Input />
       <AnimatePresence>
-        {post.map((post) => (
+        {posts.map((post) => (
           <motion.div
             key={post.id}
             initial={{ opacity: 0 }}
@@ -39,12 +39,8 @@ export default function Feed() {
           >
             <Post
               key={post.id}
-              userName={post.data().username}
-              name={post.data().name}
-              postImage={post.data().image}
-              userImage={post.data().userImg}
-              text={post.data().text}
               post={post}
+              postImage={post?.data()?.image}
             /> 
           </motion.div>
         ))}
