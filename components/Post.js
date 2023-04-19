@@ -24,6 +24,7 @@ import { useEffect, useState } from "react";
 import { deleteObject, ref } from "firebase/storage";
 import { useRecoilState } from "recoil";
 import { modalState, postIdState } from "../atom/modalAtom";
+import { useRouter } from "next/router";
 
 export default function Post({ postImage, post,id }) {
   const { data: session } = useSession();
@@ -33,7 +34,7 @@ export default function Post({ postImage, post,id }) {
   const [hasLikes, setHasLikes] = useState(null);
   const [open, setOpen] = useRecoilState(modalState);
   const [postId, setPostId] = useRecoilState(postIdState);
-
+  const router = useRouter();
   async function likePost() {
     if (session) {
       if (hasLikes) {
@@ -54,6 +55,7 @@ export default function Post({ postImage, post,id }) {
       if (post?.data()?.image) {
         deleteObject(ref(storage, `posts${id}/image`));
       }
+      router.push("/");
     }
   }
 
@@ -139,7 +141,7 @@ export default function Post({ postImage, post,id }) {
                 <span className=" text-sm ">{comments.length}</span>
               )}
             </div>
-            {session?.user.uid === post?.data().id && (
+            {session?.user.uid === post?.data()?.id && (
               <TrashIcon
                 onClick={deletePost}
                 className="h-9 w-9  hoverEffect p-2  hover:text-red-600 hover:bg-red-100"
