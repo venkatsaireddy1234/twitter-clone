@@ -25,16 +25,15 @@ import { deleteObject, ref } from "firebase/storage";
 import { useRecoilState } from "recoil";
 import { modalState, postIdState } from "../atom/modalAtom";
 
-export default function Post({
-  postImage,
-  post,
-}) {
+export default function Post({ postImage, post }) {
   const { data: session } = useSession();
   const [likes, setLikes] = useState([]);
+  const [comments, setComments] = useState([]);
+  const [hasComments, setHasComments] = useState(null);
   const [hasLikes, setHasLikes] = useState(null);
   const [open, setOpen] = useRecoilState(modalState);
   const [postId, setPostId] = useRecoilState(postIdState);
-  
+
   async function likePost() {
     if (session) {
       if (hasLikes) {
@@ -70,8 +69,20 @@ export default function Post({
       likes.findIndex((like) => like.id === session?.user.uid) !== -1
     );
   }, [likes]);
-  
- 
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      collection(db, "posts", post.id, "comments"),
+      (snapshot) => setComments(snapshot.docs)
+    );
+  }, [db]);
+
+  useEffect(() => {
+    setHasComments(
+      comments.findIndex((comment) => comment.id === session?.user.uid) !== -1
+    );
+  }, [comments]);
+
   return (
     <div className="flex border-b border-gray-200 p-3 cursor-pointer ">
       {/* {user-image} */}
@@ -80,15 +91,17 @@ export default function Post({
         src={post?.data()?.userImg}
         alt="userImage"
       />
-      <div>
+      <div className="flex-1">
         {/* {Header} */}
         <div className="flex items-center justify-between">
           {/* {user-info} */}
           <div className="flex items-center space-x-1 whitespace-nowrap">
             <h4 className="font-bold text-[15px] hover:underline sm:text-[16px]">
-        {post?.data()?.name}
+              {post?.data()?.name}
             </h4>
-            <span className="text-sm sm:text-[15px]">@{post?.data()?.username} -</span>
+            <span className="text-sm sm:text-[15px]">
+              @{post?.data()?.username} -
+            </span>
             <span className="text-sm sm:text-[15px] hover:underline">
               <Moment fromNow>{post?.data()?.timestamp?.toDate()}</Moment>
             </span>
@@ -96,25 +109,36 @@ export default function Post({
           {/* {icon} */}
           <DotsHorizontalIcon className="h-10 hoverEffect hover:bg-sky-200 hover:text-500" />
         </div>
-        <p className="text-gray-800 text-[15px sm:text-[16px] mb-2">{post?.data()?.text}</p>
+        <p className="text-gray-800 text-[15px sm:text-[16px] mb-2">
+          {post?.data()?.text}
+        </p>
         <div>
           {/* {post-image} */}
           {postImage && (
-            <img className="rounded-2xl mr-2" src={post?.data()?.image} alt="postImage" />
+            <img
+              className="rounded-2xl mr-2"
+              src={post?.data()?.image}
+              alt="postImage"
+            />
           )}
           {/* {icons} */}
           <div className="flex justify-between  text-gray-500 p-2">
-          <ChatIcon
-            onClick={() => {
-              if (!session) {
-                signIn();
-              } else {
-                setPostId(post.id);
-                setOpen(!open);
-              }
-            }}
-            className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-sky-100"
-          />
+            <div className="flex items-center select-none">
+              <ChatIcon
+                onClick={() => {
+                  if (!session) {
+                    signIn();
+                  } else {
+                    setPostId(post.id);
+                    setOpen(!open);
+                  }
+                }}
+                className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-sky-100"
+              />
+              {comments.length > 0 && (
+                <span className=" text-sm ">{comments.length}</span>
+              )}
+            </div>
             {session?.user.uid === post?.data().id && (
               <TrashIcon
                 onClick={deletePost}
