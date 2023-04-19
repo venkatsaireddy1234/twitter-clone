@@ -25,7 +25,7 @@ import { deleteObject, ref } from "firebase/storage";
 import { useRecoilState } from "recoil";
 import { modalState, postIdState } from "../atom/modalAtom";
 
-export default function Post({ postImage, post }) {
+export default function Post({ postImage, post,id }) {
   const { data: session } = useSession();
   const [likes, setLikes] = useState([]);
   const [comments, setComments] = useState([]);
@@ -37,9 +37,9 @@ export default function Post({ postImage, post }) {
   async function likePost() {
     if (session) {
       if (hasLikes) {
-        await deleteDoc(doc(db, "posts", post.id, "likes", session?.user.uid));
+        await deleteDoc(doc(db, "posts", id, "likes", session?.user.uid));
       } else {
-        await setDoc(doc(db, "posts", post.id, "likes", session.user.uid), {
+        await setDoc(doc(db, "posts", id, "likes", session.user.uid), {
           username: session.user.username,
         });
       }
@@ -50,16 +50,16 @@ export default function Post({ postImage, post }) {
 
   async function deletePost() {
     if (window.confirm("Are you sure you want to delete the post")) {
-      deleteDoc(doc(db, "posts", post.id));
+      deleteDoc(doc(db, "posts", id));
       if (post?.data()?.image) {
-        deleteObject(ref(storage, `posts${post.id}/image`));
+        deleteObject(ref(storage, `posts${id}/image`));
       }
     }
   }
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
-      collection(db, "posts", post.id, "likes"),
+      collection(db, "posts", id, "likes"),
       (snapshot) => setLikes(snapshot.docs)
     );
   }, [db]);
@@ -72,7 +72,7 @@ export default function Post({ postImage, post }) {
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
-      collection(db, "posts", post.id, "comments"),
+      collection(db, "posts", id, "comments"),
       (snapshot) => setComments(snapshot.docs)
     );
   }, [db]);
@@ -129,7 +129,7 @@ export default function Post({ postImage, post }) {
                   if (!session) {
                     signIn();
                   } else {
-                    setPostId(post.id);
+                    setPostId(id);
                     setOpen(!open);
                   }
                 }}

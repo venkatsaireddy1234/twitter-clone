@@ -40,6 +40,7 @@ export default function Feed() {
             <Post
               key={post.id}
               post={post}
+              id = {post.id}
               postImage={post?.data()?.image}
             /> 
           </motion.div>
