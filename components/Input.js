@@ -20,7 +20,10 @@ export default function Input() {
   const filePickerRef = useRef(null);
 
   const sendPost = async () => {
-    if (loading) return;
+    if (loading){
+
+    return
+    };
     setLoading(true);
 
     const docRef = await addDoc(collection(db, "posts"), {
@@ -84,7 +87,7 @@ export default function Input() {
                 <img
                   src={selectedFile}
                   alt=""
-                  className={`${loading && "animate-bounce"}`}
+                  className={`${loading && "animate-"}`}
                 />
               </div>
             )}

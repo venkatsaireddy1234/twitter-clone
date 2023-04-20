@@ -9,12 +9,32 @@ import {
   InboxIcon,
   DotsCircleHorizontalIcon,
   DotsHorizontalIcon,
-  BookmarkIcon
+  BookmarkIcon,
 } from "@heroicons/react/outline";
-import { useSession,signIn, signOut } from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react";
+import { useState } from "react";
+import { useRouter } from "next/router";
 
 export default function SideBar() {
   const { data: session } = useSession();
+  const [act, setAct] = useState(false);
+  const router = useRouter();
+
+  const itemClick = (text)=>{
+    setAct(text)
+  }
+
+  const profileClick = (text)=>{
+    setAct(text)
+    // router.push("profile")
+    router.push("profile");
+
+  }
+
+  const homeClick = (text) =>{
+    setAct(text)
+    router.push("/");
+  }
   return (
     <div className="hidden sm:flex flex-col xl:items-start fixed h-full xl:ml-24 ">
       {/* {Logo} */}
@@ -27,16 +47,17 @@ export default function SideBar() {
       </div>
       {/* {MenuBar} */}
       <div className="mt-4 mb-2.5 xl:items-start">
-        <SideBarMenuItem text="Home" Icon={HomeIcon} active />
-        <SideBarMenuItem text="Explore" Icon={HashtagIcon} />
+        <SideBarMenuItem  
+        active={act === "Home"} itemClick={()=>homeClick("Home")} text="Home" Icon={HomeIcon} />
+        <SideBarMenuItem  active={act === "Explore"}  itemClick={()=>itemClick("Explore")} text="Explore" Icon={HashtagIcon} />
         {session && (
           <>
-            <SideBarMenuItem text="Notifications" Icon={BellIcon} />
-            <SideBarMenuItem text="Messages" Icon={InboxIcon} />
-            <SideBarMenuItem text="BookMarks" Icon={BookmarkIcon} />
-            <SideBarMenuItem text="Twitter Blue" Icon={ClipboardIcon} />
-            <SideBarMenuItem text="Profile" Icon={UserIcon} />
-            <SideBarMenuItem text="More" Icon={DotsCircleHorizontalIcon} />
+            <SideBarMenuItem active={act === "Notifications"} itemClick={()=>itemClick("Notifications")} text="Notifications" Icon={BellIcon} />
+            <SideBarMenuItem active={act === "Messages"} itemClick={()=>itemClick("Messages")} text="Messages" Icon={InboxIcon} />
+            <SideBarMenuItem active={act === "BookMarks"} itemClick={()=>itemClick("BookMarks")} text="BookMarks" Icon={BookmarkIcon} />
+            <SideBarMenuItem active={act === "Twitter Blue"} itemClick={()=>itemClick("Twitter Blue")} text="Twitter Blue" Icon={ClipboardIcon} />
+            <SideBarMenuItem active={act === "Profile"} itemClick={()=>profileClick("Profile")} text="Profile" Icon={UserIcon} />
+            <SideBarMenuItem active={act === "More"} itemClick={()=>itemClick("More")} text="More" Icon={DotsCircleHorizontalIcon} />
           </>
         )}
       </div>
@@ -51,7 +72,7 @@ export default function SideBar() {
           <div className="hoverEffect text-grey-700 flex items-center justify-center xl:justify-start mt-auto">
             <img
               onClick={signOut}
-              src= {session.user.image}
+              src={session.user.image}
               className="h-10 w-10 rounded-full xl:mr-2"
               alt="user-image"
             ></img>
@@ -63,9 +84,10 @@ export default function SideBar() {
           </div>
         </>
       ) : (
-        <button 
-        onClick={signIn}
-        className="bg-blue-400 text-white rounded-full w-56 h-12 font-bold shadow-md text-lg hidden xl:inline hover:brightness-95">
+        <button
+          onClick={signIn}
+          className="bg-blue-400 text-white rounded-full w-56 h-12 font-bold shadow-md text-lg hidden xl:inline hover:brightness-95"
+        >
           Sign In
         </button>
       )}
