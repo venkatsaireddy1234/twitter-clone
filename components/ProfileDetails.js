@@ -12,31 +12,20 @@ import { signIn, useSession } from "next-auth/react";
 import EditForm from "./EditForm";
 
 export default function ProfileDetails({}) {
-  const [posts, setPosts] = useState([]);
   const { data: session } = useSession();
   const [openEditForm, setOpenEditForm] = useRecoilState(editFormModalState);
-  useEffect(
-    () =>
-      onSnapshot(
-        query(collection(db, "posts"), orderBy("timestamp", "desc")),
-        (snapshot) => {
-          setPosts(snapshot.docs);
-        }
-      ),
-    []
-  );
-  const userPhoto = posts.map((post) => post.data().userImg);
 
+  
   return (
     <div className="flex flex-col ">
       <div className="bg-gray-100 w-full p-20 border border-white-500">
-        <img className="fixed" src={userPhoto} alt="userImage" />
+        <img className="fixed" src="" alt="userImage" />
       </div>
       <div className="flex items-center justify-between ">
         <div className="">
           <img
             className="h-13 w-13 rounded-full ml-4 -mt-12 absolute "
-            src={userPhoto[0]}
+            src={session?.user?.image}
             alt="userImage"
           />
         </div>

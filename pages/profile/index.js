@@ -24,10 +24,8 @@ export default function Home({ newsResults, randomUsersResults }) {
       ),
     []
   );
-
-    const postPhotos = posts.map((post)=> post.data().image)
-    const userPhoto =posts.map((post)=> post?.data()?.userImg)
-
+  const userMedia = posts.map((post)=>(post?.data().image))
+        console.log(userMedia);
   return (
     <div>
       <Head>
@@ -55,12 +53,12 @@ export default function Home({ newsResults, randomUsersResults }) {
           
         {/* profileDeatils */}
         
-        <ProfileDetails userPhoto={userPhoto}/>
+        <ProfileDetails />
         </div>
 
         {/* Widgets */}
         <ProfileWidget
-          postPhotos={postPhotos.slice(0,3)}
+        userMedia={userMedia}
           newsResults={newsResults.articles}
           randomUsersResults={randomUsersResults.results}
         />

@@ -1,15 +1,16 @@
 import { SearchIcon } from "@heroicons/react/outline";
 import News from "./News";
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import {  useState } from "react";
 
 export default function ProfileWidget({
   newsResults,
   randomUsersResults,
-  postPhotos,
+  userMedia
 }) {
   const [articleNum, setArticleNum] = useState(3);
   const [userNum, setUserNum] = useState(3);
+  
 
   return (
     <div className="xl:w-[600px] hidden lg:inline ml-8 space-y-5">
@@ -23,15 +24,13 @@ export default function ProfileWidget({
           />
         </div>
       </div>
+      {userMedia[0] > 0 && (
 
-      <div className=" space-y-3   pt-2 rounded-xl w-[80%] xl:w-[75%] sticky top-30  ">        
-        {/* <div class="col-span-2  h-50 rounded-xl -mb-3"> */}
-        <img
-              className="rounded-sm mr-2"
-              src={postPhotos}
-              alt="postImage"
-            />
-      </div>
+        <div className=" space-y-3   pt-2 rounded-xl w-[80%] xl:w-[75%] sticky top-30  ">
+          {/* <div class="col-span-2  h-50 rounded-xl -mb-3"> */}
+          <img className="rounded-sm mr-2" src={userMedia} alt="postImage" />
+        </div>
+          )}
       <div className="text-gray-700 space-y-3 bg-gray-100  pt-2 rounded-xl w-[90%] xl:w-[75%] sticky top-30">
         <h4 className="font-bold text-xl px-4">You might like</h4>
         <AnimatePresence>

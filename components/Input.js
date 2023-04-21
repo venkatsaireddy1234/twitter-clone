@@ -21,7 +21,6 @@ export default function Input() {
 
   const sendPost = async () => {
     if (loading){
-
     return
     };
     setLoading(true);
@@ -87,7 +86,7 @@ export default function Input() {
                 <img
                   src={selectedFile}
                   alt=""
-                  className={`${loading && "animate-"}`}
+                  className={`${loading && "animate-pulse"}`}
                 />
               </div>
             )}

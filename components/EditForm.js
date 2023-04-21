@@ -5,21 +5,20 @@ import Modal from "react-modal";
 import { editFormModalState } from "@/atom/modalAtom";
 import "react-datepicker/dist/react-datepicker.css";
 import { XIcon } from "@heroicons/react/solid";
+import { addDoc, collection, doc, serverTimestamp, updateDoc } from "firebase/firestore";
+import { db, storage } from "@/firebase";
 import { PhotographIcon } from "@heroicons/react/outline";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 
-export default function EditForm() {
+export default function EditForm({}) {
   const [openEditForm, setOpenEditForm] = useRecoilState(editFormModalState);
+  const [selectedBgImage, setSelectedBgImage] = useState(null);
+  const [loading, setLoading] = useState(false);
+
   const filePickerRef = useRef(null);
 
-  const addBgImageToPost = async (e) => {
-    const reader = new FileReader();
-    if (e.target.files[0]) {
-      reader.readAsDataURL(e.target.files[0]);
-    }
-  };
-
+  
   const {
     control,
     handleSubmit,
@@ -37,9 +36,48 @@ export default function EditForm() {
     defaultValue: "",
   });
 
-  const onSubmit = (data) =>{
-    setOpenEditForm(false)
+  const  onSubmitEditForm = async (data) =>{
+    if (loading){
+      return
+      };
+      setLoading(true);
+    const docRef = await addDoc(collection(db,"userDetails"),{
+        userName:data.name,
+        description:data.bio,
+        dateOfBirth:data.dateOfBirth,
+        location:data.location,
+        timestamp:serverTimestamp(),
+      })
+      
+      const imageRef = ref(storage, `userDetails${docRef.id}/image`);
+      if (selectedBgImage) {
+        await uploadString(imageRef, selectedBgImage, "data_url").then(async () => {
+          const downloadURL = await getDownloadURL(imageRef);
+          await updateDoc(doc(db, "userDetails", docRef.id), {
+            image: downloadURL,
+          });
+        });
+      }
+      setOpenEditForm(false)
+      setSelectedBgImage(null);
+      setLoading(false);
+
   } 
+
+  const addImageToUserDetails = async (e) => {
+    const reader = new FileReader();
+    if (e.target.files[0]) {
+      reader.readAsDataURL(e.target.files[0]);
+    }
+
+    reader.onload = (readerEvent) => {
+      setSelectedBgImage(readerEvent.target.result);
+
+    };
+  };
+
+
+
 
   return (
     <div className="flex flex-col">
@@ -49,7 +87,7 @@ export default function EditForm() {
           onRequestClose={() => setOpenEditForm(!openEditForm)}
           className="max-w-lg w-[90%] absolute top-24 left-[50%] translate-x-[-50%] bg-white border-2 border-gray-200 rounded-xl shadow-md"
         >
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmitEditForm)}>
             
             <div className=" m-2 py-2 flex space-x-2 items-center -mb-2">
               <div
@@ -73,7 +111,7 @@ export default function EditForm() {
                       {...field}
                       type="text"
                       placeholder="Your Name"
-                      className="rounded-xl p-2 space-x-2 m-2"
+                      className="rounded-xl p-2 space-x-2 m-2 hover:border-sky-500 "
                     />
                   </>
                 )}
@@ -86,7 +124,7 @@ export default function EditForm() {
                 onBlur={onBlur}
                 dateFormat="MM/dd/yyyy"
                 name="dateOfBirth"
-                className="rounded-xl p-2 space-y-2 m-2"
+                className="rounded-xl p-2 space-y-2 m-2 hover:border-sky-500 "
                 placeholderText="Birth date"
               />
               {errors.dateOfBirth && <span  className="text-red-500 ml-3 ">{errors.dateOfBirth.message}</span>}
@@ -102,7 +140,7 @@ export default function EditForm() {
                       {...field}
                       type="text"
                       placeholder="Location"
-                      className="rounded-xl p-2 space-x-2 m-2"
+                      className="rounded-xl p-2 space-x-2 m-2 hover:border-sky-500 "
                     />
                   </>
                 )}
@@ -116,23 +154,44 @@ export default function EditForm() {
                   <textarea
                     {...field}
                     placeholder="Bio"
-                    className="rounded-xl p-2 space-x-2 m-2"
+                    className="rounded-xl p-2 space-x-2 m-2 hover:border-sky-500"
                   />
                 )}
               />
 
               {errors.bio && <span className="text-red-500 ml-3 ">{errors.bio.message}</span>}
               <div className="flex flex-col justify-center">
-              <h2 className="text-blue-500 m-3 -mb-2">
+              <h2 className="text-green-300 m-3 -mb-2">
                 Back-Ground Image
               </h2>
-              <input
-                type="file"
-                name="backgroundImage"
-                ref={register()}
-                className="rounded-xl p-2 space-x-2 m-2"
-                />
                 </div>
+                  {selectedBgImage && (
+                    <div className="relative">
+                    <XIcon
+                    className="h-5  text-black rounded-full shadow-md shadow-white cursor-pointer absolute"
+                    onClick={() => setSelectedBgImage(null)}
+                    />
+                    <img
+                    src={selectedBgImage}
+                    alt=""
+                    className={`${loading && "animate-pulse"}`}
+                    />
+                    </div>
+                    )}
+                {!loading && (<>
+                 <div
+                      className=""
+                      onClick={() => filePickerRef.current.click()}
+                    >
+                      <PhotographIcon className="h-10 w-10 text-sky-500 p-2 hoverEffect hover:bg-blue-100" />
+                      <input
+                        type="file"
+                        hidden
+                        ref={filePickerRef}
+                        onChange={addImageToUserDetails}
+                      />
+                
+                    </div> </>)}
             </div>
             <div className="flex m-4 justify-between ">
               <button
