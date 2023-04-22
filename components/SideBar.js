@@ -65,7 +65,7 @@ export default function SideBar() {
       {session ? (
         <>
           {" "}
-          <button className="bg-blue-400 text-white rounded-full w-56 h-12 font-bold shadow-md text-lg hidden xl:inline hover:brightness-95">
+          <button className="bg-sky-500 text-white rounded-full w-56 h-12 font-bold shadow-md text-lg hidden xl:inline hover:brightness-95">
             Tweet
           </button>
           {/* {miniProfile} */}

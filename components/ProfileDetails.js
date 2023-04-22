@@ -1,6 +1,3 @@
-import { db } from "@/firebase";
-import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
-import { useEffect, useState } from "react";
 import {
   LocationMarkerIcon,
   CakeIcon,
@@ -10,21 +7,41 @@ import { useRecoilState } from "recoil";
 import { editFormModalState } from "@/atom/modalAtom";
 import { signIn, useSession } from "next-auth/react";
 import EditForm from "./EditForm";
+import ProfileTabs from "./ProfileTabs";
+import { useEffect, useState } from "react";
+import { collection, doc, onSnapshot } from "firebase/firestore";
+import { db } from "@/firebase";
 
 export default function ProfileDetails({}) {
   const { data: session } = useSession();
   const [openEditForm, setOpenEditForm] = useRecoilState(editFormModalState);
+  const [userDetails, setUserDetails] = useState([]);
 
-  
+  useEffect(() => {
+    const unsubscribe = onSnapshot(collection(db, "userDetails"), (snapshot) =>
+      setUserDetails(snapshot.docs)
+    );
+  }, [db]);
+
+  const details = userDetails.map((each) => {
+    return {
+      id: each.data().id,
+      name: each.data().userName,
+      location: each.data().location,
+      description: each.data().description,
+      dateOfBirth: each.data().dateOfBirth,
+    };
+  }); 
+  const userDetailsID = userDetails.map((each) => each.id);
   return (
-    <div className="flex flex-col ">
-      <div className="bg-gray-100 w-full p-20 border border-white-500">
-        <img className="fixed" src="" alt="userImage" />
-      </div>
-      <div className="flex items-center justify-between ">
+    <div className="flex flex-col">
+      {/* <div className=" w-full p-20 border border-white-500 relative">
+        <img className="w-[200px] h-[200px] -m-10 " src={session?.user?.image} alt="userImage" />
+      </div> */}
+      <div className="flex items-center justify-between mt-8">
         <div className="">
           <img
-            className="h-13 w-13 rounded-full ml-4 -mt-12 absolute "
+            className="h-13 w-13 rounded-full ml-3 -mt-12 absolute"
             src={session?.user?.image}
             alt="userImage"
           />
@@ -46,15 +63,16 @@ export default function ProfileDetails({}) {
       </div>
       <div className="flex ml-6 mt-10 flex-col">
         <h4 className="font-bold text-[20px] hover:underline sm:text-[16px]">
-          Venkat
+          {/* {details[0].name} */}
+          venkat
         </h4>
+
         <span className="text-sm text-gray-500 sm:text-[15px]">
           @venkat1234
         </span>
         <p className="text-gray-800 text-[15px sm:text-[16px] mb-2 mt-2">
-          This is the descrption This is the descrption This is the descrption
-          This is the descrption This is the descrption This is the descrption
-          This is the descrption This is the descrption
+          {/* {details[1].description} */}
+          This is the description
         </p>
       </div>
       <div className="flex items-center p-3">
@@ -71,7 +89,9 @@ export default function ProfileDetails({}) {
           <span className=" text-lg p-2 ">Hindupur</span>
         </div>
       </div>
-      <EditForm />
+
+      <EditForm userDetailsID={userDetailsID} />
+      <ProfileTabs />
     </div>
   );
 }

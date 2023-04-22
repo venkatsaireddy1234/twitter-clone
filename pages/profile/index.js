@@ -25,7 +25,6 @@ export default function Home({ newsResults, randomUsersResults }) {
     []
   );
   const userMedia = posts.map((post)=>(post?.data().image))
-        console.log(userMedia);
   return (
     <div>
       <Head>

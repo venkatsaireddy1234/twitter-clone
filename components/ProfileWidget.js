@@ -24,13 +24,13 @@ export default function ProfileWidget({
           />
         </div>
       </div>
-      {userMedia[0] > 0 && (
+      {/* {userMedia > 0 && ( */}
 
         <div className=" space-y-3   pt-2 rounded-xl w-[80%] xl:w-[75%] sticky top-30  ">
           {/* <div class="col-span-2  h-50 rounded-xl -mb-3"> */}
           <img className="rounded-sm mr-2" src={userMedia} alt="postImage" />
         </div>
-          )}
+          {/* )} */}
       <div className="text-gray-700 space-y-3 bg-gray-100  pt-2 rounded-xl w-[90%] xl:w-[75%] sticky top-30">
         <h4 className="font-bold text-xl px-4">You might like</h4>
         <AnimatePresence>
