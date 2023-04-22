@@ -11,6 +11,7 @@ import ProfileTabs from "./ProfileTabs";
 import { useEffect, useState } from "react";
 import { collection, doc, onSnapshot } from "firebase/firestore";
 import { db } from "@/firebase";
+import Image from "next/image";
 
 export default function ProfileDetails({}) {
   const { data: session } = useSession();
@@ -40,10 +41,12 @@ export default function ProfileDetails({}) {
       </div> */}
       <div className="flex items-center justify-between mt-8">
         <div className="">
-          <img
+          <Image
             className="h-13 w-13 rounded-full ml-3 -mt-12 absolute"
             src={session?.user?.image}
             alt="userImage"
+            width={100}
+            height={100}
           />
         </div>
         <div className="mt-2">

@@ -2,6 +2,8 @@ import { SearchIcon } from "@heroicons/react/outline";
 import News from "./News";
 import { AnimatePresence, motion } from "framer-motion";
 import {  useState } from "react";
+import Image from "next/image";
+
 
 export default function ProfileWidget({
   newsResults,
@@ -28,7 +30,7 @@ export default function ProfileWidget({
 
         <div className=" space-y-3   pt-2 rounded-xl w-[80%] xl:w-[75%] sticky top-30  ">
           {/* <div class="col-span-2  h-50 rounded-xl -mb-3"> */}
-          <img className="rounded-sm mr-2" src={userMedia} alt="postImage" />
+          <Image className="rounded-sm mr-2" src={userMedia} alt="postImage" width={100} height={100}/>
         </div>
           {/* )} */}
       <div className="text-gray-700 space-y-3 bg-gray-100  pt-2 rounded-xl w-[90%] xl:w-[75%] sticky top-30">
@@ -46,11 +48,13 @@ export default function ProfileWidget({
                 key={user.login.username}
                 className="flex items-center px-4 py-2 cursor-pointer hover:bg-gray-200 transition duration-500 ease-out"
               >
-                <img
+                <Image
                   src={user.picture.thumbnail}
                   className="rounded-full"
-                  width="40"
-                ></img>
+                  width={40}
+                  alt="user"
+                  height={1}
+                />
                 <div className="truncate ml-4 leading-5">
                   <h4 className="font-bold hover:underline text-[14px] truncate">
                     {" "}

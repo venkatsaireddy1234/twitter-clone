@@ -40,9 +40,10 @@ export default function SideBar() {
       {/* {Logo} */}
       <div className="hoverEffect p-0 hover:bg-blue-100 xl:px-1">
         <Image
-          width="50"
-          height="50"
+          width={50}
+          height={50}
           src="https://help.twitter.com/content/dam/help-twitter/brand/logo.png"
+          alt='twitter'
         ></Image>
       </div>
       {/* {MenuBar} */}
@@ -70,12 +71,14 @@ export default function SideBar() {
           </button>
           {/* {miniProfile} */}
           <div className="hoverEffect text-grey-700 flex items-center justify-center xl:justify-start mt-auto">
-            <img
+            <Image
               onClick={signOut}
               src={session.user.image}
               className="h-10 w-10 rounded-full xl:mr-2"
               alt="user-image"
-            ></img>
+              height={10}
+              width={10}
+            />
             <div className="leading-5 hidden xl:inline">
               <h4 className="font-bold">{session.user.name}</h4>
               <p className="text-grey-500">@{session.user.username}</p>

@@ -2,6 +2,8 @@ import { SearchIcon } from "@heroicons/react/outline";
 import News from "./News";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
+
 
 export default function Widgets({ newsResults, randomUsersResults }) {
   const [articleNum, setArticleNum] = useState(3);
@@ -66,11 +68,13 @@ export default function Widgets({ newsResults, randomUsersResults }) {
                 key={user.login.username}
                 className="flex items-center px-4 py-2 cursor-pointer hover:bg-gray-200 transition duration-500 ease-out"
               >
-                <img
+                <Image
                   src={user.picture.thumbnail}
                   className="rounded-full"
-                  width="40"
-                ></img>
+                  width={40}
+                  height={40}
+                  alt='user'
+                />
                 <div className="truncate ml-4 leading-5">
                   <h4 className="font-bold hover:underline text-[14px] truncate">
                     {" "}

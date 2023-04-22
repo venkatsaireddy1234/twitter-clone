@@ -25,6 +25,7 @@ import { deleteObject, ref } from "firebase/storage";
 import { useRecoilState } from "recoil";
 import { modalState, postIdState } from "../atom/modalAtom";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 export default function Post({ postImage, post,id }) {
   const { data: session } = useSession();
@@ -88,10 +89,12 @@ export default function Post({ postImage, post,id }) {
   return (
     <div className="flex border-b border-gray-200 p-3 cursor-pointer ">
       {/* {user-image} */}
-      <img
+      <Image
         className="h-11 w-11 rounded-full mr-4"
         src={post?.data()?.userImg}
         alt="userImage"
+        width={11}
+        height={11}
       />
       <div className="flex-1">
         {/* {Header} */}
@@ -117,10 +120,13 @@ export default function Post({ postImage, post,id }) {
         <div>
           {/* {post-image} */}
           {postImage && (
-            <img
+            <Image
               className="rounded-2xl mr-2"
               src={post?.data()?.image}
               alt="postImage"
+              // width='auto'
+              width={1000}
+              height={1000}
             />
           )}
           {/* {icons} */}

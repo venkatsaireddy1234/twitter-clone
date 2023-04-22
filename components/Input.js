@@ -10,6 +10,7 @@ import {
 } from "firebase/firestore";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { signOut, useSession } from "next-auth/react";
+import Image from "next/image";
 import { useRef, useState } from "react";
 
 export default function Input() {
@@ -60,12 +61,14 @@ export default function Input() {
   return (
     <>
       {session && (
-        <div className="flex space-x-3 border-b border-gray-300 p-3 ">
-          <img
+        <div className="flex  space-x-3 border-b border-gray-300 p-3 ">
+          <Image
             onClick={signOut}
             src={session.user.image}
             alt="user-image"
             className="w-11 h-11 rounded-full cursor-pointer hover:brightness-95"
+            width={11}
+            height={11}
           />
           <div className="w-full divide-y divide-gray-300">
             <div>
@@ -83,10 +86,12 @@ export default function Input() {
                   className="h-5  text-black rounded-full shadow-md shadow-white cursor-pointer absolute"
                   onClick={() => setSelectedFile(null)}
                 />
-                <img
+                <Image
                   src={selectedFile}
-                  alt=""
+                  alt="uploadimage"
                   className={`${loading && "animate-pulse"}`}
+                  width={1000}
+                  height={1000}
                 />
               </div>
             )}

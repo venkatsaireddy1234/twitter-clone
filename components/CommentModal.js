@@ -12,6 +12,7 @@ import { addDoc, collection, doc, onSnapshot, serverTimestamp } from "firebase/f
 import Moment from "react-moment";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 
 export default function CommentModal() {
@@ -59,10 +60,12 @@ export default function CommentModal() {
             </div>
             <div className="p-2 flex items-center space-x-1 relative">
               <span className="w-0.5 h-full z-[-1] absolute left-8 top-11 bg-gray-300" />
-              <img
+              <Image
                 className="h-11 w-11 rounded-full mr-4"
                 src={post?.data()?.userImg}
                 alt="user-img"
+                width={11}
+                height={11}
               />
               <h4 className="font-bold text-[15px] sm:text-[16px] hover:underline">
                 {post?.data()?.name}
@@ -79,10 +82,12 @@ export default function CommentModal() {
             </p>
 
             <div className="flex  p-3 space-x-3">
-              <img
+              <Image
                 src={session.user.image}
                 alt="user-img"
                 className="h-11 w-11 rounded-full cursor-pointer hover:brightness-95"
+                width={11}
+                height={11}
               />
               <div className="w-full divide-y divide-gray-200">
                 <div className="">

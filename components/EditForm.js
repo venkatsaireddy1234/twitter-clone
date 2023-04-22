@@ -19,6 +19,7 @@ import { useEffect, useRef, useState } from "react";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { useSession } from "next-auth/react";
 import "firebase/firestore";
+import Image from "next/image";
 
 export default function EditForm({userDetailsID}) {
   const [openEditForm, setOpenEditForm] = useRecoilState(editFormModalState);
@@ -259,10 +260,12 @@ export default function EditForm({userDetailsID}) {
                     className="h-5  text-black rounded-full shadow-md shadow-white cursor-pointer absolute"
                     onClick={() => setSelectedBgImage(null)}
                   />
-                  <img
+                  <Image
                     src={selectedBgImage}
-                    alt=""
+                    alt="bgImage"
                     className={`${loading && "animate-pulse"}`}
+                    // width='auto'
+                    // height='auto'
                   />
                 </div>
               )}

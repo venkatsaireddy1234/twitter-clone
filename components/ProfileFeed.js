@@ -12,30 +12,27 @@ import {
 } from "@heroicons/react/solid";
 import { signIn } from "next-auth/react";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 
 export default function ProfileFeed({
-  key,
   post,
   id,
-  postImage,
-  likes,
   hasLikes,
   open,
-  postId,
   setPostId,
   setOpen,
-  likePost,
-  deletePost
 }) {
-    const {data:session} = useSession();
+  const { data: session } = useSession();
   return (
     <div>
       <div className="flex border-b border-gray-200 p-3 cursor-pointer ">
         {/* {user-image} */}
-        <img
+        <Image
           className="h-11 w-11 rounded-full mr-4"
           src={post?.data()?.userImg}
           alt="userImage"
+          width={11}
+          height={11}
         />
         <div className="flex-1">
           {/* {Header} */}
@@ -60,12 +57,15 @@ export default function ProfileFeed({
           </p>
           <div>
             {/* {post-image} */}
-            {post?.data()?.image && ( <img
+            {post?.data()?.image && (
+              <Image
                 className="rounded-2xl mr-2"
                 src={post?.data()?.image}
                 alt="postImage"
-              />) 
-              }
+                width={1000}
+                height={1000}
+              />
+            )}
             {/* {icons} */}
             <div className="flex justify-between  text-gray-500 p-2">
               <div className="flex items-center select-none">
@@ -86,19 +86,19 @@ export default function ProfileFeed({
               </div>
               {session?.user.uid === post?.data()?.id && (
                 <TrashIcon
-                  onClick={()=>{}}
+                  onClick={() => {}}
                   className="h-9 w-9  hoverEffect p-2  hover:text-red-600 hover:bg-red-100"
                 />
               )}
               <div className="flex  items-center">
                 {hasLikes ? (
                   <HeartFilled
-                  onClick={()=>{}}
+                    onClick={() => {}}
                     className="h-9 w-9 hoverEffect p-2 text-red-600 hover:bg-red-100"
                   />
                 ) : (
                   <HeartIcon
-                  onClick={()=>{}}
+                    onClick={() => {}}
                     className="h-9 w-9 hoverEffect p-2 hover:text-red-600 hover:bg-red-100"
                   />
                 )}
