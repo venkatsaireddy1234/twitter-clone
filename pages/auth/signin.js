@@ -14,7 +14,7 @@ export default function signin({ providers}) {
       />
       <div className="">
         { providers && Object.values(providers).map(provider=>(
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center" key={provider.id}>
             <Image
               className="w-36 "
               src="https://help.twitter.com/content/dam/help-twitter/brand/logo.png"
