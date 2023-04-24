@@ -39,17 +39,17 @@ export default function ProfileDetails({}) {
       {/* <div className=" w-full p-20 border border-white-500 relative">
         <img className="w-[200px] h-[200px] -m-10 " src={session?.user?.image} alt="userImage" />
       </div> */}
-      <div className="flex items-center justify-between mt-8">
+      <div className="flex items-center justify-between mt-8 ">
         <div className="">
           <Image
-            className="h-13 w-13 rounded-full ml-3 -mt-12 absolute"
+            className="h-13 w-13 rounded-full ml-3 -mt-12 absolute hover:bg-sky-300 p-1"
             src={session?.user?.image}
             alt="userImage"
             width={100}
             height={100}
           />
         </div>
-        <div className="mt-2">
+        <div className="mt-2 ">
           <button
             onClick={() => {
               if (!session) {
@@ -58,7 +58,7 @@ export default function ProfileDetails({}) {
                 setOpenEditForm(!openEditForm);
               }
             }}
-            className="border border-gray-200 rounded-full font-bold mr-2 p-2 -mb-5"
+            className="border border-gray-200 rounded-full font-bold mr-2 p-2 -mb-5 hover:bg-gray-200"
           >
             Edit Profile
           </button>
