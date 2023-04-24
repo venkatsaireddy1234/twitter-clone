@@ -3,10 +3,10 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
-import { db } from "@/firebase";
-import SideBar from "@/components/SideBar";
-import ProfileWidget from "@/components/ProfileWidget";
-import ProfileDetails from "@/components/ProfileDetails";
+import { db } from "../../firebase";
+import SideBar from "../../components/SideBar";
+import ProfileWidget from "../../components/ProfileWidget";
+import ProfileDetails from "../../components/ProfileDetails";
 
 export default function Home({ newsResults, randomUsersResults }) {
   const router = useRouter();

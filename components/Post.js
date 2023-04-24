@@ -19,7 +19,7 @@ import {
   onSnapshot,
   setDoc,
 } from "firebase/firestore";
-import { db, storage } from "@/firebase";
+import { db, storage } from "../firebase";
 import { useEffect, useState } from "react";
 import { deleteObject, ref } from "firebase/storage";
 import { useRecoilState } from "recoil";

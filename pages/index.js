@@ -1,7 +1,7 @@
-import CommentModal from "@/components/CommentModal";
-import Feed from "@/components/Feed";
-import SideBar from "@/components/SideBar";
-import Widgets from "@/components/Widgets";
+import CommentModal from "../components/CommentModal";
+import Feed from "../components/Feed";
+import SideBar from "../components/SideBar";
+import Widgets from "../components/Widgets";
 import Head from "next/head";
 
 export default function Home({ newsResults,randomUsersResults }) {

@@ -2,7 +2,7 @@ import { Controller, useController, useForm } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import { useRecoilState } from "recoil";
 import Modal from "react-modal";
-import { editFormModalState } from "@/atom/modalAtom";
+import { editFormModalState } from "../atom/modalAtom";
 import "react-datepicker/dist/react-datepicker.css";
 import { XIcon } from "@heroicons/react/solid";
 import {

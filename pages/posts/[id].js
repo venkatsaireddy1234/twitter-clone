@@ -13,9 +13,9 @@ import {
   query,
 } from "firebase/firestore";
 import { db } from "../../firebase";
-import Comment from "@/components/Comment";
+import Comment from "../../components/Comment";
 import { AnimatePresence, motion } from "framer-motion";
-import SideBar from "@/components/SideBar";
+import SideBar from "../../components/SideBar";
 
 
 

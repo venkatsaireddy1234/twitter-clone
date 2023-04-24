@@ -4,7 +4,7 @@ import {
   CalendarIcon,
 } from "@heroicons/react/outline";
 import { useRecoilState } from "recoil";
-import { editFormModalState } from "@/atom/modalAtom";
+import { editFormModalState } from "../atom/modalAtom";
 import { signIn, useSession } from "next-auth/react";
 import EditForm from "./EditForm";
 import ProfileTabs from "./ProfileTabs";
