@@ -31,8 +31,8 @@ export default function ProfileFeed({
           className="h-11 w-11 rounded-full mr-4"
           src={post?.data()?.userImg}
           alt="userImage"
-          width={11}
-          height={11}
+          width={100}
+          height={100}
         />
         <div className="flex-1">
           {/* {Header} */}

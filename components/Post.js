@@ -93,8 +93,8 @@ export default function Post({ postImage, post,id }) {
         className="h-11 w-11 rounded-full mr-4"
         src={post?.data()?.userImg}
         alt="userImage"
-        width={11}
-        height={11}
+        width={100}
+        height={100}
       />
       <div className="flex-1">
         {/* {Header} */}
@@ -114,20 +114,23 @@ export default function Post({ postImage, post,id }) {
           {/* {icon} */}
           <DotsHorizontalIcon className="h-10 hoverEffect hover:bg-sky-200 hover:text-500" />
         </div>
-        <p className="text-gray-800 text-[15px sm:text-[16px] mb-2">
-          {post?.data()?.text}
+        <p
+          onClick={() => router.push(`/posts/${id}`)}
+          className="text-gray-800 text-[15px sm:text-[16px] mb-2"
+        >          {post?.data()?.text}
         </p>
         <div>
           {/* {post-image} */}
+         
           {postImage && (
             <Image
-              className="rounded-2xl mr-2"
-              src={post?.data()?.image}
-              alt="postImage"
-              // width='auto'
-              width={1000}
-              height={1000}
-            />
+            onClick={() => router.push(`/posts/${id}`)}
+            className="rounded-2xl mr-2"
+            src={post?.data()?.image}
+            alt="postImage"
+            width={1000}
+            height={1000}
+          />
           )}
           {/* {icons} */}
           <div className="flex justify-between  text-gray-500 p-2">

@@ -76,8 +76,8 @@ export default function SideBar() {
               src={session.user.image}
               className="h-10 w-10 rounded-full xl:mr-2"
               alt="user-image"
-              height={10}
-              width={10}
+              height={100}
+              width={100}
             />
             <div className="leading-5 hidden xl:inline">
               <h4 className="font-bold">{session.user.name}</h4>

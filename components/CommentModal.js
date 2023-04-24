@@ -34,6 +34,7 @@ export default function CommentModal() {
       name:session.user.name,
       username:session.user.username,
       userImage:session.user.image,
+      userId: session.user.uid,
       timestamp:serverTimestamp()
     })
     setOpen(false);
@@ -64,8 +65,8 @@ export default function CommentModal() {
                 className="h-11 w-11 rounded-full mr-4"
                 src={post?.data()?.userImg}
                 alt="user-img"
-                width={11}
-                height={11}
+                width={100}
+                height={100}
               />
               <h4 className="font-bold text-[15px] sm:text-[16px] hover:underline">
                 {post?.data()?.name}
@@ -86,8 +87,8 @@ export default function CommentModal() {
                 src={session.user.image}
                 alt="user-img"
                 className="h-11 w-11 rounded-full cursor-pointer hover:brightness-95"
-                width={11}
-                height={11}
+                width={100}
+                height={100}
               />
               <div className="w-full divide-y divide-gray-200">
                 <div className="">

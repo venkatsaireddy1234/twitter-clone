@@ -53,7 +53,7 @@ export default function ProfileWidget({
                   className="rounded-full"
                   width={40}
                   alt="user"
-                  height={1}
+                  height={40}
                 />
                 <div className="truncate ml-4 leading-5">
                   <h4 className="font-bold hover:underline text-[14px] truncate">
