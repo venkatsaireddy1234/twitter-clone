@@ -10,7 +10,7 @@ import EditForm from "./EditForm";
 import ProfileTabs from "./ProfileTabs";
 import { useEffect, useState } from "react";
 import { collection, doc, onSnapshot } from "firebase/firestore";
-import { db } from "@/firebase";
+import { db } from "../firebase";
 import Image from "next/image";
 
 export default function ProfileDetails({}) {

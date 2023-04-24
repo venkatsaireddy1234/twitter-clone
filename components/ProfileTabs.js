@@ -8,7 +8,7 @@ import {
   onSnapshot,
   setDoc,
 } from "firebase/firestore";
-import { db, storage } from "@/firebase";
+import { db, storage } from "../firebase";
 import { deleteObject, ref } from "firebase/storage";
 import { useRecoilState } from "recoil";
 import { modalState, postIdState } from "../atom/modalAtom";

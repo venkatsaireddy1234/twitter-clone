@@ -13,7 +13,7 @@ import {
   serverTimestamp,
   updateDoc,
 } from "firebase/firestore";
-import { db, storage } from "@/firebase";
+import { db, storage } from "../firebase";
 import { PhotographIcon } from "@heroicons/react/outline";
 import { useEffect, useRef, useState } from "react";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";

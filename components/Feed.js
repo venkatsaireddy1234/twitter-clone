@@ -3,7 +3,7 @@ import Input from "./Input";
 import Post from "./Post";
 import { useEffect, useState } from "react";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
-import { db } from "@/firebase";
+import { db } from "../firebase";
 import { AnimatePresence, motion } from "framer-motion";
 import ProfileFeed from "./ProfileFeed";
 

@@ -1,4 +1,4 @@
-import { db, storage } from "@/firebase";
+import { db, storage } from "../firebase";
 import { PhotographIcon, XIcon } from "@heroicons/react/outline";
 import { EmojiHappyIcon } from "@heroicons/react/outline";
 import {
