@@ -1,25 +1,39 @@
 import { SearchIcon } from "@heroicons/react/outline";
 import News from "./News";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-
+import Modal from "react-modal";
 
 export default function Widgets({ newsResults, randomUsersResults }) {
   const [articleNum, setArticleNum] = useState(3);
   const [userNum, setUserNum] = useState(3);
+  const [showModal, setShowModal] = useState(false);
 
+  function handleInputClick() {
+    setShowModal(!showModal);
+  }
+
+    
   return (
-    <div className="xl:w-[600px] hidden lg:inline ml-8 space-y-5">
+    <div className="xl:w-[600px] hidden lg:inline ml-8 space-y-5" onClick={()=>setShowModal(!showModal)}>
       <div className="w-[90%] xl:w-[75%] sticky top-0 bg-white py-1.5 z-50">
         <div className="flex items-center p-3 rounded-full bg-red-300 relative">
-          <SearchIcon className="h-5 z-50 text-gray-500" />
+          <SearchIcon className="h-5 z-50 text-gray-500 " />
           <input
             className="absolute inset-0 rounded-full pl-11 border-gray-500 text-gray-700 focus:shadow-lg focus:bg-white bg-gray-100 "
             type="text"
             placeholder="Search Twitter"
+            onClick={handleInputClick}
           />
         </div>
+        {showModal && (
+          <div className="w-[90%] xl:w-[340px] sticky top-0 bg-white-100 py-1.5 z-50 -ml-0.5  mt-1 rounded-xl h-[100px] border border-black-200 ">
+            <p className="text-gray-500 m-2">
+              Try searching for people, topics, or keywords
+            </p>
+          </div>
+        )}
       </div>
       <div className="text-gray-700 space-y-3 bg-gray-100 rounded-xl pt-2 w-[90%] xl:w-[75%]">
         <h4 className="font-bold text-xl px-4">Whats happening</h4>
@@ -73,7 +87,7 @@ export default function Widgets({ newsResults, randomUsersResults }) {
                   className="rounded-full"
                   width={40}
                   height={40}
-                  alt='user'
+                  alt="user"
                 />
                 <div className="truncate ml-4 leading-5">
                   <h4 className="font-bold hover:underline text-[14px] truncate">
