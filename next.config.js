@@ -11,6 +11,8 @@ const nextConfig = {
       "randomuser.me",
       "firebasestorage.googleapis.com",
       "cdn.cms-twdigitalassets.com",
+      "cdn.vox-cdn.com",
+      "cdn.cnn.com",
     ],
   },
 };
