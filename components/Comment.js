@@ -33,7 +33,6 @@ export default function Comment({ comment, commentId, originalPostId }) {
   const router = useRouter();
 
 
-  console.log(comment);
   useEffect(() => {
     const unsubscribe = onSnapshot(
       collection(db, "posts", originalPostId, "comments", commentId, "likes"),
