@@ -24,8 +24,7 @@ export default function ProfileFeed({
 }) {
   const { data: session } = useSession();
   return (
-    <div>
-      <div className="flex border-b border-gray-200 p-3 cursor-pointer ">
+      <div className="flex border-b border-gray-200 p-3 cursor-pointer">
         {/* {user-image} */}
         <Image
           className="h-11 w-11 rounded-full mr-4"
@@ -120,6 +119,5 @@ export default function ProfileFeed({
           </div>
         </div>
       </div>
-    </div>
   );
 }

@@ -35,6 +35,9 @@ export default function ProfileDetails({}) {
   }); 
   const userDetailsID = userDetails.map((each) => each.id);
   return (
+    <div>
+
+    
     <div className="flex flex-col">
       {/* <div className=" w-full p-20 border border-white-500 relative">
         <img className="w-[200px] h-[200px] -m-10 " src={session?.user?.image} alt="userImage" />
@@ -95,6 +98,7 @@ export default function ProfileDetails({}) {
 
       <EditForm userDetailsID={userDetailsID} />
       <ProfileTabs />
+    </div>
     </div>
   );
 }

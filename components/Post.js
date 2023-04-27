@@ -87,10 +87,10 @@ export default function Post({ postImage, post,id }) {
   }, [comments]);
 
   return (
-    <div className="flex border-b border-gray-200 p-3 cursor-pointer ">
+    <div className="xl:flex border-b border-gray-200 p-3 cursor-pointer sm:flex border-b border-gray-200 p-3 cursor-pointer ">
       {/* {user-image} */}
       <Image
-        className="h-11 w-11 rounded-full mr-4"
+        className="h-11 w-11 rounded-full mr-5 "
         src={post?.data()?.userImg}
         alt="userImage"
         width={100}
@@ -125,7 +125,7 @@ export default function Post({ postImage, post,id }) {
           {postImage && (
             <Image
             onClick={() => router.push(`/posts/${id}`)}
-            className="rounded-2xl mr-2"
+            className="rounded-2xl mr-2 "
             src={post?.data()?.image}
             alt="postImage"
             width={1000}

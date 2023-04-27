@@ -36,7 +36,7 @@ export default function SideBar() {
     router.push("/");
   }
   return (
-    <div className="hidden sm:flex flex-col xl:items-start fixed h-full xl:ml-24 ">
+    <div className="flex flex-col  h-full xl:ml-24 ">
       {/* {Logo} */}
       <div className="hoverEffect p-0 hover:bg-blue-100 xl:px-1">
         <Image
@@ -70,7 +70,7 @@ export default function SideBar() {
             Tweet
           </button>
           {/* {miniProfile} */}
-          <div className="hoverEffect text-grey-700 flex items-center justify-center xl:justify-start mt-auto">
+          <div className="hoverEffect text-grey-700 flex items-center justify-center xl:justify-start">
             <Image
               onClick={signOut}
               src={session.user.image}
